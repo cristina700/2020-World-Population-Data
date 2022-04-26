@@ -260,3 +260,6 @@ SELECT name, density_per_sq_km,
      FROM countries
  GROUP BY density_classification
  order by COUNT(*);
+ 
+To watch some graphics go to https://public.tableau.com/app/profile/cristina.sayavedra#!/
+
