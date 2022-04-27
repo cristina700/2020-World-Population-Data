@@ -261,5 +261,307 @@ SELECT name, density_per_sq_km,
  GROUP BY density_classification
  order by COUNT(*);
  
+ sqlite> .mode table
+sqlite> SELECT NAME, MAX(population) FROM countries;
++-------+-----------------+
+| name  | MAX(population) |
++-------+-----------------+
+| China | 1439323776      |
++-------+-----------------+
+sqlite> SELECT NAME, MIN(population) FROM countries;
++---------------------+-----------------+
+|        name         | MIN(population) |
++---------------------+-----------------+
+| Antigua and Barbuda | 97929           |
++---------------------+-----------------+
+sqlite> SELECT AVG(fertility_rate) FROM countries;
++---------------------+
+| AVG(fertility_rate) |
++---------------------+
+| 2.68659217877095    |
++---------------------+
+sqlite> SELECT AVG(density_per_sq_km) FROM countries;
++------------------------+
+| AVG(density_per_sq_km) |
++------------------------+
+| 388.597765363128       |
++------------------------+
+sqlite> SELECT NAME, MAX(fertility_rate) FROM countries;
++-------+---------------------+
+| name  | MAX(fertility_rate) |
++-------+---------------------+
+| Niger | 7.0                 |
++-------+---------------------+
+sqlite> SELECT NAME, MAX(fertility_rate) FROM countries;
++-------+---------------------+
+| name  | MAX(fertility_rate) |
++-------+---------------------+
+| Niger | 7.0                 |
++-------+---------------------+
+sqlite> SELECT NAME, MIN(fertility_rate) FROM countries;
++--------+---------------------+
+|  name  | MIN(fertility_rate) |
++--------+---------------------+
+| Taiwan | 1.2                 |
++--------+---------------------+
+sqlite> SELECT NAME, MAX(net_migrants) FROM countries;
++---------------+-------------------+
+|     name      | MAX(net_migrants) |
++---------------+-------------------+
+| United States | 954806            |
++---------------+-------------------+
+sqlite> SELECT NAME, MIN(net_migrants) FROM countries;
++-----------+-------------------+
+|   name    | MIN(net_migrants) |
++-----------+-------------------+
+| Venezuela | -653249           |
++-----------+-------------------+
+sqlite> SELECT NAME, MIN(net_migrants) FROM countries;
++-----------+-------------------+
+|   name    | MIN(net_migrants) |
++-----------+-------------------+
+| Venezuela | -653249           |
++-----------+-------------------+
+sqlite> SELECT NAME, MAX(median_age) FROM countries;
++-------+-----------------+
+| name  | MAX(median_age) |
++-------+-----------------+
+| Japan | 48.0            |
++-------+-----------------+
+sqlite> SELECT NAME, MIN(median_age) FROM countries;
++-------+-----------------+
+| name  | MIN(median_age) |
++-------+-----------------+
+| Niger | 15.0            |
++-------+-----------------+
+sqlite> SELECT median_age, MAX (fertility_rate) FROM countries    GROUP BY median_age    HAVING fertility_rate >=5    ;
++------------+----------------------+
+| median_age | MAX (fertility_rate) |
++------------+----------------------+
+| 15.0       | 7.0                  |
+| 16.0       | 5.9                  |
+| 17.0       | 6.1                  |
+| 18.0       | 5.4                  |
++------------+----------------------+
+sqlite>     SELECT fertility_rate, MAX (median_age) FROM countries    GROUP BY fertility_rate    HAVING median_age <= 17;
++----------------+------------------+
+| fertility_rate | MAX (median_age) |
++----------------+------------------+
+| 5.5            | 17.0             |
+| 5.6            | 17.0             |
+| 5.8            | 17.0             |
+| 5.9            | 16.0             |
+| 6.0            | 17.0             |
+| 6.1            | 17.0             |
+| 7.0            | 15.0             |
++----------------+------------------+
+sqlite> SELECT median_age, MIN (fertility_rate) FROM countries    GROUP BY median_age    HAVING fertility_rate <=1.3;
++------------+----------------------+
+| median_age | MIN (fertility_rate) |
++------------+----------------------+
+| 37.0       | 1.3                  |
+| 38.0       | 1.3                  |
+| 39.0       | 1.2                  |
+| 42.0       | 1.2                  |
+| 43.0       | 1.3                  |
+| 45.0       | 1.3                  |
+| 46.0       | 1.3                  |
+| 47.0       | 1.3                  |
++------------+----------------------+
+sqlite> SELECT name, density_per_sq_km,    CASE         WHEN density_per_sq_km > 9000 THEN "Really high density"        WHEN density_per_sq_km > 1000 THEN "High density"        WHEN density_per_sq_km > 150 THEN "Normal density"        WHEN density_per_sq_km > 30 THEN "Regular density"        ELSE "Low density"    END as "density_classification" FROM countries;
++--------------------------+-------------------+------------------------+
+|           name           | density_per_sq_km | density_classification |
++--------------------------+-------------------+------------------------+
+| China                    | 153               | Normal density         |
+| India                    | 464               | Normal density         |
+| United States            | 36                | Regular density        |
+| Indonesia                | 151               | Normal density         |
+| Pakistan                 | 287               | Normal density         |
+| Brazil                   | 25                | Low density            |
+| Nigeria                  | 226               | Normal density         |
+| Bangladesh               | 1265              | High density           |
+| Russia                   | 9                 | Low density            |
+| Mexico                   | 66                | Regular density        |
+| Japan                    | 347               | Normal density         |
+| Ethiopia                 | 115               | Regular density        |
+| Philippines              | 368               | Normal density         |
+| Egypt                    | 103               | Regular density        |
+| Vietnam                  | 314               | Normal density         |
+| DR Congo                 | 40                | Regular density        |
+| Turkey                   | 110               | Regular density        |
+| Iran                     | 52                | Regular density        |
+| Germany                  | 240               | Normal density         |
+| Thailand                 | 137               | Regular density        |
+| United Kingdom           | 281               | Normal density         |
+| France                   | 119               | Regular density        |
+| Italy                    | 206               | Normal density         |
+| Sudan                    | 25                | Low density            |
+| Ukraine                  | 75                | Regular density        |
+| Iraq                     | 93                | Regular density        |
+| Afghanistan              | 60                | Regular density        |
+| Poland                   | 124               | Regular density        |
+| Canada                   | 4                 | Low density            |
+| Morocco                  | 83                | Regular density        |
+| Saudi Arabia             | 16                | Low density            |
+| Uzbekistan               | 79                | Regular density        |
+| Peru                     | 26                | Low density            |
+| Angola                   | 26                | Low density            |
+| Malaysia                 | 99                | Regular density        |
+| Mozambique               | 40                | Regular density        |
+| Ghana                    | 137               | Regular density        |
+| Yemen                    | 56                | Regular density        |
+| Nepal                    | 203               | Normal density         |
+| Venezuela                | 32                | Regular density        |
+| Madagascar               | 48                | Regular density        |
+| Cameroon                 | 56                | Regular density        |
+| Côte d'Ivoire            | 83                | Regular density        |
+| North Korea              | 214               | Normal density         |
+| Australia                | 3                 | Low density            |
+| Niger                    | 19                | Low density            |
+| Taiwan                   | 673               | Normal density         |
+| Sri Lanka                | 341               | Normal density         |
+| Burkina Faso             | 76                | Regular density        |
+| Mali                     | 17                | Low density            |
+| Romania                  | 84                | Regular density        |
+| Malawi                   | 203               | Normal density         |
+| Chile                    | 26                | Low density            |
+| Kazakhstan               | 7                 | Low density            |
+| Zambia                   | 25                | Low density            |
+| Guatemala                | 167               | Normal density         |
+| Ecuador                  | 71                | Regular density        |
+| Syria                    | 95                | Regular density        |
+| Netherlands              | 508               | Normal density         |
+| Senegal                  | 87                | Regular density        |
+| Cambodia                 | 95                | Regular density        |
+| Chad                     | 13                | Low density            |
+| Somalia                  | 25                | Low density            |
+| Zimbabwe                 | 38                | Regular density        |
+| Guinea                   | 53                | Regular density        |
+| Rwanda                   | 525               | Normal density         |
+| Benin                    | 108               | Regular density        |
+| Burundi                  | 463               | Normal density         |
+| Tunisia                  | 76                | Regular density        |
+| Bolivia                  | 11                | Low density            |
+| Belgium                  | 383               | Normal density         |
+| Haiti                    | 414               | Normal density         |
+| Cuba                     | 106               | Regular density        |
+| South Sudan              | 18                | Low density            |
+| Dominican Republic       | 225               | Normal density         |
+| Czech Republic (Czechia) | 139               | Regular density        |
+| Greece                   | 81                | Regular density        |
+| Jordan                   | 115               | Regular density        |
+| Portugal                 | 111               | Regular density        |
+| Azerbaijan               | 123               | Regular density        |
+| Sweden                   | 25                | Low density            |
+| Honduras                 | 89                | Regular density        |
+| United Arab Emirates     | 118               | Regular density        |
+| Hungary                  | 107               | Regular density        |
+| Tajikistan               | 68                | Regular density        |
+| Belarus                  | 47                | Regular density        |
+| Austria                  | 109               | Regular density        |
+| Papua New Guinea         | 20                | Low density            |
+| Serbia                   | 100               | Regular density        |
+| Israel                   | 400               | Normal density         |
+| Switzerland              | 219               | Normal density         |
+| Togo                     | 152               | Normal density         |
+| Sierra Leone             | 111               | Regular density        |
+| Hong Kong                | 7140              | High density           |
+| Laos                     | 32                | Regular density        |
+| Paraguay                 | 18                | Low density            |
+| Bulgaria                 | 64                | Regular density        |
+| Libya                    | 4                 | Low density            |
+| Lebanon                  | 667               | Normal density         |
+| Nicaragua                | 55                | Regular density        |
+| Kyrgyzstan               | 34                | Regular density        |
+| El Salvador              | 313               | Normal density         |
+| Turkmenistan             | 13                | Low density            |
+| Singapore                | 8358              | High density           |
+| Denmark                  | 137               | Regular density        |
+| Finland                  | 18                | Low density            |
+| Congo                    | 16                | Low density            |
+| Slovakia                 | 114               | Regular density        |
+| Norway                   | 15                | Low density            |
+| Oman                     | 16                | Low density            |
+| State of Palestine       | 847               | Normal density         |
+| Costa Rica               | 100               | Regular density        |
+| Liberia                  | 53                | Regular density        |
+| Ireland                  | 72                | Regular density        |
+| Central African Republic | 8                 | Low density            |
+| New Zealand              | 18                | Low density            |
+| Mauritania               | 5                 | Low density            |
+| Panama                   | 58                | Regular density        |
+| Kuwait                   | 240               | Normal density         |
+| Croatia                  | 73                | Regular density        |
+| Moldova                  | 123               | Regular density        |
+| Georgia                  | 57                | Regular density        |
+| Eritrea                  | 35                | Regular density        |
+| Uruguay                  | 20                | Low density            |
+| Bosnia and Herzegovina   | 64                | Regular density        |
+| Mongolia                 | 2                 | Low density            |
+| Armenia                  | 104               | Regular density        |
+| Jamaica                  | 273               | Normal density         |
+| Latvia                   | 30                | Low density            |
+| Bahrain                  | 2239              | High density           |
+| Equatorial Guinea        | 50                | Regular density        |
+| Trinidad and Tobago      | 273               | Normal density         |
+| Estonia                  | 31                | Regular density        |
+| Timor-Leste              | 89                | Regular density        |
+| Mauritius                | 626               | Normal density         |
+| Cyprus                   | 131               | Regular density        |
+| Eswatini                 | 67                | Regular density        |
+| Djibouti                 | 43                | Regular density        |
+| Fiji                     | 49                | Regular density        |
+| Réunion                  | 358               | Normal density         |
+| Comoros                  | 467               | Normal density         |
+| Guyana                   | 4                 | Low density            |
+| Bhutan                   | 20                | Low density            |
+| Solomon Islands          | 25                | Low density            |
+| Macao                    | 21645             | Really high density    |
+| Montenegro               | 47                | Regular density        |
+| Luxembourg               | 242               | Normal density         |
+| Western Sahara           | 2                 | Low density            |
+| Suriname                 | 4                 | Low density            |
+| Cabo Verde               | 138               | Regular density        |
+| Maldives                 | 1802              | High density           |
+| Malta                    | 1380              | High density           |
+| Brunei                   | 83                | Regular density        |
+| Guadeloupe               | 237               | Normal density         |
+| Belize                   | 17                | Low density            |
+| Bahamas                  | 39                | Regular density        |
+| Martinique               | 354               | Normal density         |
+| Iceland                  | 3                 | Low density            |
+| Vanuatu                  | 25                | Low density            |
+| French Guiana            | 4                 | Low density            |
+| Barbados                 | 668               | Normal density         |
+| New Caledonia            | 16                | Low density            |
+| French Polynesia         | 77                | Regular density        |
+| Mayotte                  | 728               | Normal density         |
+| Sao Tome & Principe      | 228               | Normal density         |
+| Samoa                    | 70                | Regular density        |
+| Saint Lucia              | 301               | Normal density         |
+| Channel Islands          | 915               | Normal density         |
+| Guam                     | 313               | Normal density         |
+| Curaçao                  | 370               | Normal density         |
+| Kiribati                 | 147               | Regular density        |
+| Micronesia               | 164               | Normal density         |
+| Grenada                  | 331               | Normal density         |
+| St. Vincent & Grenadines | 284               | Normal density         |
+| Aruba                    | 593               | Normal density         |
+| Tonga                    | 147               | Regular density        |
+| U.S. Virgin Islands      | 298               | Normal density         |
+| Seychelles               | 214               | Normal density         |
+| Antigua and Barbuda      | 223               | Normal density         |
++--------------------------+-------------------+------------------------+
+sqlite>  SELECT COUNT(*),    CASE         WHEN density_per_sq_km > 9000 THEN "Really high density"        WHEN density_per_sq_km > 1000 THEN "High density"         WHEN density_per_sq_km > 150 THEN "Normal density"         WHEN density_per_sq_km > 30 THEN "Regular density"        ELSE "Low density"    END as "density_classification"      FROM countries GROUP BY density_classification order by COUNT(*);
++----------+------------------------+
+| COUNT(*) | density_classification |
++----------+------------------------+
+| 1        | Really high density    |
+| 6        | High density           |
+| 42       | Low density            |
+| 52       | Normal density         |
+| 78       | Regular density        |
++----------+------------------------+
+sqlite>
 To watch some graphics go to https://public.tableau.com/app/profile/cristina.sayavedra#!/
 
